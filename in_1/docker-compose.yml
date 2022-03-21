@@ -1,0 +1,18 @@
+version: "3"
+services:
+  app:
+    container_name: docker-customer-mongo
+    build: .
+    restart: always
+    ports:
+      - "9080:3000"
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    restart: on-failure    
+    ports:
+      - "27017:27017"
