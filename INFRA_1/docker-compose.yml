@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - db:/data/db 
+
+
+
+  app:
+    image : node_api
+    container_name: shoping 
+    build: .
+    ports:
+    - "9080:9080"
+    depends_on:
+      mongo:
+        condition: service_started
+
+volumes:
+  db:
+
+# version: '3.8'
+# services: 
+#   database:
+#     image: mongo
+#     restart: always 
+#     environment: 
+#       - MONGO_INITDB_ROOT_USERNAME=my-username
+#       - MONGO_INITDB_ROOT_PASSWORD=my-root-password
+#     volumes: 
+#       - my_data:/data/db 
+#   node-web:
+#     build: 
+#       context: ./Shopping-api
+#       dockerfile: Dockerfile
+#     depends_on: 
+#       - database
+#     volumes: 
+#       - /app/node_modules
+#       - ./Shopping-api:/app 
+#     ports: 
+#       - "5000:5000"
+  
+# volumes: 
+#   my_data: 
